@@ -33,18 +33,22 @@ public class DetalhesExerciciosActivity extends AppCompatActivity {
     private Paciente paciente;
     private int AtividadeId;
     private AudioAdapter audioAdapter;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tela_detalhes_atividade);
 
+
+
+
         Bundle extra = getIntent().getExtras();
         if(extra != null) {
             AtividadeId = (int) extra.getSerializable("AtividadeId");
             paciente = (Paciente) extra.getSerializable("Paciente");
         }
-
+        this.context = this;
 
         Call<Atividade> call = new RetrofitConfig().getAtividadeService().AtividadeById(AtividadeId);
 
@@ -57,11 +61,15 @@ public class DetalhesExerciciosActivity extends AppCompatActivity {
 
                 TextView nomeLicao = findViewById(R.id.textView3);
                 TextView descricao = findViewById(R.id.textView);
+                TextView TituloDesc = findViewById(R.id.textDesc);
+                TextView TitulodExer = findViewById(R.id.textExer);
                 ListView listView = findViewById(R.id.listGravacao);
 
                 nomeLicao.setText(atividade.getLicao().getNome());
                 descricao.setText(atividade.getLicao().getDescricao());
-                audioAdapter = new AudioAdapter(getApplicationContext(), atividade.getExercicios() ,atividade);
+                TituloDesc.setText("Descrição");
+                TitulodExer.setText("Exercícios");
+                audioAdapter = new AudioAdapter(context, atividade.getExercicios() ,atividade);
 
                 listView.setAdapter(audioAdapter);
             }
@@ -72,17 +80,7 @@ public class DetalhesExerciciosActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
     }
-
-
-
 
 
     public void onBackPressed(){

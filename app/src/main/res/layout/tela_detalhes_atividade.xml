@@ -21,17 +21,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|center_horizontal|center"
                     android:gravity="center_horizontal"
-                    android:text="Nome Lição"
                     android:textColor="#000000"
                     android:textSize="40sp" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/textDesc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="Descrição"
                     android:textColor="#000000"
                     android:textSize="30sp" />
 
@@ -39,15 +37,13 @@
                     android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Descrição completa da lição a ser exercutada pelo aluno"
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/textExer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Exercícios"
                     android:textColor="@android:color/background_dark"
                     android:textSize="25sp" />
 

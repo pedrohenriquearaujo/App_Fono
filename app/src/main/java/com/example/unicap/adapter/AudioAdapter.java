@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class AudioAdapter  extends ArrayAdapter<Exercicio> {
     public MediaPlayer mediaPlayer = new MediaPlayer();
     boolean audio;
     private Atividade atividade;
+    private static final String TAG = "MainActivity";
 
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
@@ -129,47 +131,9 @@ public class AudioAdapter  extends ArrayAdapter<Exercicio> {
             public void onClick(View v) {
 
 
-//                Call<Exercicio> call = new RetrofitConfig().getExerciciosService().atualizarExercicio(atividade.getExercicios().get(position));
-//
-//                call.enqueue(new Callback<Exercicio>() {
-//                    @Override
-//                    public void onResponse(@NonNull Call<Exercicio> call, @NonNull Response<Exercicio> response) {
-//
-//                        Toast.makeText(context, "Status: Excelente Definido", Toast.LENGTH_LONG).show();
-//
-////                        if(response.raw().code() == 406 ){
-////
-////                            bt_aprovado.setEnabled(false);
-////                        }
-//
-//                        bt_aprovado.setVisibility(View.INVISIBLE);
-//                        bt_melhorar.setVisibility(View.INVISIBLE);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(@NonNull Call<Exercicio> call, @NonNull Throwable t) {
-//
-//                        Toast.makeText(context,t.getMessage(),Toast.LENGTH_SHORT).show();
-//
-//                    }
-//
-//                });
+                atividade.getExercicios().get(position).setStatus("PERFEITO");
 
-
-
-            //    bt_reproduzir.setEnabled(true);
-//                bt_aprovado.setEnabled(false);
-//               bt_melhorar.setEnabled(true);
-
+                showDialog(position,bt_melhorar,bt_aprovado,bt_reproduzir);
 
             }
         });
@@ -243,6 +207,84 @@ public class AudioAdapter  extends ArrayAdapter<Exercicio> {
         }
     }
 
+    void showDialog(final int position,  final Button bt_melhorar, final Button bt_aprovado , final Button bt_reproduzir) {
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.alert_dialog, null);
+
+        Button acceptButton = view.findViewById(R.id.acceptButton);
+        Button cancelButton = view.findViewById(R.id.cancelButton);
+        TextView textView = view.findViewById(R.id.textAlert);
+
+        textView.setText(String.format("Deseja Avaliar como: %s", atividade.getExercicios().get(position).getStatus()));
+
+        final AlertDialog alertDialog = new AlertDialog.Builder(context)
+
+                .setView(view)
+                .create();
+
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e(TAG, "onClick: accept button");
+
+
+
+
+
+//                Call<Exercicio> call = new RetrofitConfig().getExerciciosService().atualizarExercicio(atividade.getExercicios().get(position));
+//
+//                call.enqueue(new Callback<Exercicio>() {
+//                    @Override
+//                    public void onResponse(@NonNull Call<Exercicio> call, @NonNull Response<Exercicio> response) {
+//
+//                        Toast.makeText(context, "Status: Excelente Definido", Toast.LENGTH_LONG).show();
+//
+//                        if(response.raw().code() == 406 ){
+//
+//                            bt_aprovado.setEnabled(false);
+//                        }
+//
+//                        bt_aprovado.setVisibility(View.INVISIBLE);
+//                        bt_melhorar.setVisibility(View.INVISIBLE);
+//                    }
+//
+//                    @Override
+//                    public void onFailure(@NonNull Call<Exercicio> call, @NonNull Throwable t) {
+//
+//                        Toast.makeText(context,t.getMessage(),Toast.LENGTH_SHORT).show();
+//
+//                    }
+//
+//                });
+
+                bt_reproduzir.setEnabled(true);
+                bt_aprovado.setVisibility(View.INVISIBLE);
+                bt_melhorar.setVisibility(View.INVISIBLE);
+                alertDialog.dismiss();
+
+
+
+
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e(TAG, "onClick: cancel button" );
+                alertDialog.dismiss();
+
+            }
+        });
+
+
+
+        alertDialog.show();
+
+
+
+    }
 
 
 
