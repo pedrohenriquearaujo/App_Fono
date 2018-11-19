@@ -39,7 +39,8 @@ public class DetalhesExerciciosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tela_detalhes_atividade);
-
+        this.context = this;
+        getSupportActionBar().setTitle("Atividade");
 
 
 
@@ -48,7 +49,7 @@ public class DetalhesExerciciosActivity extends AppCompatActivity {
             AtividadeId = (int) extra.getSerializable("AtividadeId");
             paciente = (Paciente) extra.getSerializable("Paciente");
         }
-        this.context = this;
+
 
         Call<Atividade> call = new RetrofitConfig().getAtividadeService().AtividadeById(AtividadeId);
 
@@ -66,10 +67,10 @@ public class DetalhesExerciciosActivity extends AppCompatActivity {
                 ListView listView = findViewById(R.id.listGravacao);
 
                 nomeLicao.setText(atividade.getLicao().getNome());
-                descricao.setText(atividade.getLicao().getDescricao());
-                TituloDesc.setText("Descrição");
+                descricao.setText("Lição: "+atividade.getLicao().getDescricao());
+                TituloDesc.setText("Descrição:");
                 TitulodExer.setText("Exercícios");
-                audioAdapter = new AudioAdapter(context, atividade.getExercicios() ,atividade);
+                audioAdapter = new AudioAdapter(DetalhesExerciciosActivity.this, atividade.getExercicios() ,atividade);
 
                 listView.setAdapter(audioAdapter);
             }

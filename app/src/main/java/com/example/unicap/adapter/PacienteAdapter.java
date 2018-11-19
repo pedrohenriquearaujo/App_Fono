@@ -58,8 +58,8 @@ public class PacienteAdapter extends ArrayAdapter<Paciente> {
 
         anoAtual = Integer.parseInt(dataAtual);
         String currentString =  posicaoPaciente.getDataNascimento();
-        String[] separated = currentString.split("-");
-        final String s = separated[0];
+        String[] separated = currentString.split("/");
+        final String s = separated[2];
         anoPaciente = Integer.parseInt(s);
         anoIdade = anoAtual - anoPaciente;
         idade.setText( String.valueOf(String.format("Idade: %s", String.valueOf(anoIdade))));

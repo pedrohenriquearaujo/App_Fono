@@ -82,7 +82,7 @@
                         android:id="@+id/bt_aprovado"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Aprovado" />
+                        android:text="Perfeito" />
 
                     <Button
                         android:id="@+id/bt_melhorar"

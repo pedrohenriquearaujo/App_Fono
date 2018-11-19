@@ -17,7 +17,8 @@
             android:layout_marginTop="16dp"
 
             android:text="Deseja Confirmar à Avaliação Perfeito para o Paciente?"
-            android:textSize="24sp" />
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/acceptButton"

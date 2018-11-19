@@ -21,18 +21,21 @@
             android:id="@+id/textNome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/cardview_dark_background"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textIdade"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/cardview_dark_background"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textDescricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/cardview_dark_background"
             android:textSize="20sp" />
 
         <TextView
@@ -41,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="110dp"
             android:text="Atividades"
+            android:textColor="@color/cardview_dark_background"
             android:textSize="35sp" />
 
         <ListView

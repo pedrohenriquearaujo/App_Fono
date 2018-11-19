@@ -62,14 +62,7 @@ public class AtividadeAdapter extends ArrayAdapter<Atividade> {
 
         nome.setText(String.format("Lição: %s", posicaoAtividade.getLicao().getNome()));
 
-        String currentString = posicaoAtividade.getDataCriacao();
-        String[] separated = currentString.split("-");
-        s = separated[2] + "-" + separated[1] + "-" + separated[0];
-
-
-
-
-        data.setText(String.format("Data Marcada: %s", s));
+        data.setText(String.format("Data Marcada: %s", posicaoAtividade.getDataCriacao()));
         progressBar.setMax(posicaoAtividade.getExercicios().size());
         progressBar.setProgress(AtividadesConcluidas(posicaoAtividade.getExercicios()));
         progress.setText(String.format("%s/%s", String.valueOf(AtividadesConcluidas(posicaoAtividade.getExercicios())), String.valueOf(posicaoAtividade.getExercicios().size())));

@@ -72,19 +72,20 @@ public class AudioAdapter  extends ArrayAdapter<Exercicio> {
 
 
         String currentString = exercicio.getDataHoraMarcada();
-        String[] separated = currentString.split("T");
+        String[] separated = currentString.split(" ");
 
-        String[] separated2 = separated[0].split("-");
-        s = separated2[2] + "-" + separated2[1] + "-" + separated2[0];
+
+        s = separated[0];
 
 
         text_data.setText(s);
 
-        text_status.setText(exercicio.getStatus().replace("_", " "));
+        text_status.setText(exercicio.getStatus().replace("_", " ").toLowerCase());
 
         final Button bt_reproduzir = listItem.findViewById(R.id.bt_reproduzir);
         final Button bt_aprovado = listItem.findViewById(R.id.bt_aprovado);
         final Button bt_melhorar = listItem.findViewById(R.id.bt_melhorar);
+
         audio = false;
 
 
@@ -133,7 +134,7 @@ public class AudioAdapter  extends ArrayAdapter<Exercicio> {
 
                 atividade.getExercicios().get(position).setStatus("PERFEITO");
 
-                showDialog(position,bt_melhorar,bt_aprovado,bt_reproduzir);
+                showDialog(position,bt_melhorar,bt_aprovado,bt_reproduzir, text_status);
 
             }
         });
@@ -146,33 +147,35 @@ public class AudioAdapter  extends ArrayAdapter<Exercicio> {
 
                 atividade.getExercicios().get(position).setStatus("VOCE_PODE_MELHORAR");
 
-
-                Call<Exercicio> call = new RetrofitConfig().getExerciciosService().atualizarExercicio(atividade.getExercicios().get(position));
-
-                call.enqueue(new Callback<Exercicio>() {
-                    @Override
-                    public void onResponse(Call<Exercicio> call, Response<Exercicio> response) {
-
-                        Toast.makeText(context, "Status: Voce pode Melhor Definido", Toast.LENGTH_LONG).show();
-                        bt_aprovado.setVisibility(View.INVISIBLE);
-                        bt_melhorar.setVisibility(View.INVISIBLE);
+                showDialog(position,bt_melhorar,bt_aprovado,bt_reproduzir, text_status);
 
 
-                    }
-
-                    @Override
-                    public void onFailure(Call<Exercicio> call, Throwable t) {
-
-                        Toast.makeText(context,t.getMessage(),Toast.LENGTH_SHORT).show();
-
-                    }
-
-                });
-
-
-
-//                bt_aprovado.setEnabled(true);
-//                bt_melhorar.setEnabled(false);
+//                Call<Exercicio> call = new RetrofitConfig().getExerciciosService().atualizarExercicio(atividade.getExercicios().get(position));
+//
+//                call.enqueue(new Callback<Exercicio>() {
+//                    @Override
+//                    public void onResponse(Call<Exercicio> call, Response<Exercicio> response) {
+//
+//                        Toast.makeText(context, "Status: Voce pode Melhor Definido", Toast.LENGTH_LONG).show();
+//                        bt_aprovado.setVisibility(View.INVISIBLE);
+//                        bt_melhorar.setVisibility(View.INVISIBLE);
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Exercicio> call, Throwable t) {
+//
+//                        Toast.makeText(context,t.getMessage(),Toast.LENGTH_SHORT).show();
+//
+//                    }
+//
+//                });
+//
+//
+//
+////                bt_aprovado.setEnabled(true);
+////                bt_melhorar.setEnabled(false);
 
             }
         });
@@ -207,7 +210,7 @@ public class AudioAdapter  extends ArrayAdapter<Exercicio> {
         }
     }
 
-    void showDialog(final int position,  final Button bt_melhorar, final Button bt_aprovado , final Button bt_reproduzir) {
+    void showDialog(final int position,  final Button bt_melhorar, final Button bt_aprovado , final Button bt_reproduzir, final TextView textStatus) {
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.alert_dialog, null);
@@ -216,7 +219,7 @@ public class AudioAdapter  extends ArrayAdapter<Exercicio> {
         Button cancelButton = view.findViewById(R.id.cancelButton);
         TextView textView = view.findViewById(R.id.textAlert);
 
-        textView.setText(String.format("Deseja Avaliar como: %s", atividade.getExercicios().get(position).getStatus()));
+        textView.setText(String.format("Deseja Avaliar como: %s",atividade.getExercicios().get(position).getStatus().replace("_"," ").toLowerCase()));
 
         final AlertDialog alertDialog = new AlertDialog.Builder(context)
 
@@ -229,34 +232,33 @@ public class AudioAdapter  extends ArrayAdapter<Exercicio> {
                 Log.e(TAG, "onClick: accept button");
 
 
+                textStatus.setText(atividade.getExercicios().get(position).getStatus().replace("_"," "));
 
 
+                Call<Exercicio> call = new RetrofitConfig().getExerciciosService().atualizarExercicio(atividade.getExercicios().get(position));
 
-//                Call<Exercicio> call = new RetrofitConfig().getExerciciosService().atualizarExercicio(atividade.getExercicios().get(position));
-//
-//                call.enqueue(new Callback<Exercicio>() {
-//                    @Override
-//                    public void onResponse(@NonNull Call<Exercicio> call, @NonNull Response<Exercicio> response) {
-//
-//                        Toast.makeText(context, "Status: Excelente Definido", Toast.LENGTH_LONG).show();
-//
-//                        if(response.raw().code() == 406 ){
-//
-//                            bt_aprovado.setEnabled(false);
-//                        }
-//
-//                        bt_aprovado.setVisibility(View.INVISIBLE);
-//                        bt_melhorar.setVisibility(View.INVISIBLE);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(@NonNull Call<Exercicio> call, @NonNull Throwable t) {
-//
-//                        Toast.makeText(context,t.getMessage(),Toast.LENGTH_SHORT).show();
-//
-//                    }
-//
-//                });
+                call.enqueue(new Callback<Exercicio>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Exercicio> call, @NonNull Response<Exercicio> response) {
+
+
+                        if(response.raw().code() == 406 ){
+
+                            bt_aprovado.setEnabled(false);
+                        }
+
+                        bt_aprovado.setVisibility(View.INVISIBLE);
+                        bt_melhorar.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Exercicio> call, @NonNull Throwable t) {
+
+                        Toast.makeText(context,t.getMessage(),Toast.LENGTH_SHORT).show();
+
+                    }
+
+                });
 
                 bt_reproduzir.setEnabled(true);
                 bt_aprovado.setVisibility(View.INVISIBLE);
@@ -277,16 +279,7 @@ public class AudioAdapter  extends ArrayAdapter<Exercicio> {
 
             }
         });
-
-
-
         alertDialog.show();
-
-
-
     }
-
-
-
 
 }

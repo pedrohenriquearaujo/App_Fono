@@ -32,6 +32,8 @@ public class AtividadesActivity extends AppCompatActivity {
         setContentView(R.layout.tela_detalhes_paciente);
         String s;
 
+        getSupportActionBar().setTitle("Detalhes Paciente");
+
 
         Bundle extra = getIntent().getExtras();
         if(extra != null) {
@@ -47,12 +49,10 @@ public class AtividadesActivity extends AppCompatActivity {
         nome.setText(String.format("Nome: %s", paciente.getNome()));
 
 
-        String currentString = paciente.getDataNascimento();
-        String[] separated = currentString.split("-");
-        s = separated[2] + "-" + separated[1] + "-" + separated[0];
 
 
-        idade.setText(String.format("Data de Nascimento: %s", s));
+
+        idade.setText(String.format("Data de Nascimento: %s", paciente.getDataNascimento()));
         if (paciente.getDescricao() == null){
             paciente.setDescricao("Nenhuma Descrição definida");
         }

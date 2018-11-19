@@ -16,9 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Pacientes"
+            android:text="Clique no nome do paciente para ter mais detalhes!"
             android:textColor="@android:color/background_dark"
-            android:textSize="35sp" />
+            android:textSize="24sp" />
 
         <ListView
             android:id="@+id/listViewPaciente"

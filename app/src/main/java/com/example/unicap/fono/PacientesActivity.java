@@ -28,6 +28,8 @@ public class PacientesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tela_pacientes);
 
+        getSupportActionBar().setTitle("Pacientes");
+
         listarPacientes();
     }
 

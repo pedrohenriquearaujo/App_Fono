@@ -54,6 +54,7 @@ public class ExercicioActivity extends AppCompatActivity {
         exercicioList = new ArrayList<>();
         final Button bt_adicionar_exercicio = findViewById (R.id.bt_adicionar_exercicio);
 
+
         bt_adicionar_exercicio.setEnabled(false);
 
 
@@ -88,12 +89,12 @@ public class ExercicioActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                         selectedmonth = selectedmonth + 1;
                         data.setText("" + selectedday + "/" + selectedmonth + "/" + selectedyear);
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                         mcurrentDate.set(selectedyear, selectedmonth - 1, selectedday);
                         dataFormatada = sdf.format(mcurrentDate.getTime());
                     }
                 }, mYear, mMonth, mDay);
-                mDatePicker.setTitle("Select Date");
+                mDatePicker.setTitle("Selecione a data");
                 mDatePicker.show();
                 bt_adicionar_exercicio.setEnabled(true);
 
@@ -122,18 +123,22 @@ public class ExercicioActivity extends AppCompatActivity {
 //
 //            }
 //        });
-
+        final Button bt_concluir = findViewById (R.id.bt_concluir);
         Date dataHoraAtual = new Date();
         final String horaAtual = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
+        if (atividade.getExercicios().isEmpty()){
+            bt_concluir.setEnabled(false);
+        }
 
 
-        Button bt_concluir = findViewById (R.id.bt_concluir);
         bt_concluir.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
                 atividade.setExercicios(exercicioList);
+
+
 
                 Call<Atividade> call = new RetrofitConfig().getAtividadeService().cadastrarAtividade(atividade);
                 call.enqueue(new Callback<Atividade>() {
@@ -166,16 +171,17 @@ public class ExercicioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                bt_concluir.setEnabled(true);
                 bt_adicionar_exercicio.setEnabled(false);
                 data.setText("");
 
-                String dataHoraMarcada = dataFormatada + "T" + horaAtual.toString();
+                String dataHoraMarcada = dataFormatada + " " + horaAtual.toString();
                 Log.d("DATA", dataHoraMarcada);
                 ListView listView = findViewById(R.id.listViewExercicios);
 
 
 
-                exercicioList.add(new Exercicio(0, null, "NAO_REALIZADO", dataHoraMarcada, null, null));
+                exercicioList.add(new Exercicio(0, null, "NAO_REALIZADO", dataHoraMarcada.replace("-","/"), null, null));
 
                 atividade.setExercicios(exercicioList);
 

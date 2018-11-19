@@ -48,15 +48,11 @@ public class ExercicioAdapter  extends ArrayAdapter<Exercicio> {
 
 
         String currentString = posicaoPaciente.getDataHoraMarcada();
-        String[] separated = currentString.split("T");
+        String[] separated = currentString.split(" ");
         final String s = separated[0];
 
 
-        String[] separated2 = s.split("-");
-        s2 = separated2[2] + "-" + separated2[1] + "-" + separated2[0];
-
-
-        data.setText("Dia: " + s2);
+        data.setText("Dia: " + s);
         nome.setText(String.format("Lição: %s", nomeLicao));
 
         return listItem;

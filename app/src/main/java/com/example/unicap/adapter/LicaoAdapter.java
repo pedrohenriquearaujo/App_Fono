@@ -58,8 +58,6 @@ public class LicaoAdapter extends ArrayAdapter<Licao> {
             @Override
             public void onClick(View v) {
 
-
-
                 Intent i = new Intent(context.getApplicationContext(),ExercicioActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("Paciente",paciente);
